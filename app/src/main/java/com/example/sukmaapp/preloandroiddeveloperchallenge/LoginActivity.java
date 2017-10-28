@@ -1,6 +1,7 @@
 package com.example.sukmaapp.preloandroiddeveloperchallenge;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -70,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String result){
                 if(!result.contains("username, email atau password salah")){
-                    //ToDo: Go To Lovelist Activity
+                    startActivity(new Intent(context,LovelistActivity.class));
                 }else{
                     Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 }
