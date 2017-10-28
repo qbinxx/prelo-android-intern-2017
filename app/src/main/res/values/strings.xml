@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Prelo Android Developer Challenge</string>
+
+    <!--LoginActivity-->
+    <dimen name="marginTop_loginActivity">100dp</dimen>
+    <dimen name="paddingLeftRight_loginActivity">30dp</dimen>
+    <string name="btn_text_login">LOGIN</string>
+    <string name="et_username_hint">Username or email</string>
+    <string name="et_password_hint">Password</string>
 </resources>
