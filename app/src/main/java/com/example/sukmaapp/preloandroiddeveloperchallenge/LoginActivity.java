@@ -8,9 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.sukmaapp.preloandroiddeveloperchallenge.network.PreloServices;
+
 public class LoginActivity extends AppCompatActivity {
 
     private String username, password;
+    private PreloServices preloServices;
 
     private Context context;
     private EditText etUsername, etPassword;
@@ -41,6 +44,10 @@ public class LoginActivity extends AppCompatActivity {
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
 
+                /**
+                 * Melakukan pemeriksaan terhadap form isian login yang telah diisi
+                 */
+
                 if(username.trim().length() <= 0){
                     Toast.makeText(context, "Username can't be empty", Toast.LENGTH_SHORT).show();
                 }else if(username.trim().length() < 4){
@@ -57,6 +64,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginProcess(String username, String password){
-        //ToDo: Do Login Request Service
+        preloServices = new PreloServices();
+
+        preloServices.login(username,password,new PreloServices.VolleyCallback(){
+            @Override
+            public void onSuccess(String result){
+                if(!result.contains("username, email atau password salah")){
+                    //ToDo: Go To Lovelist Activity
+                }else{
+                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
 }
