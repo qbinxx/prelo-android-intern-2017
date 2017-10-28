@@ -34,13 +34,12 @@ public class PreloServices {
     }
 
     /**
-     * Deskripsi Method:
+     * Deskripsi:
      * Melakukan Request HTTP Post ke PreloService dengan param username_or_email dan password
      * Hasil request dikembalikan melalui Objek VolleyCallback yang akan ditindak lanjuti di Activity Login
      */
 
     public void login(String username,String password,final VolleyCallback callback){
-        //ToDo: Request Login Service
         HashMap<String, String> params = new HashMap<>();
         params.put("username_or_email", username);
         params.put("password", password);
