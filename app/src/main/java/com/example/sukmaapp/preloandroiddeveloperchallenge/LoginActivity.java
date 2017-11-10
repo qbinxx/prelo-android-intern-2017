@@ -10,6 +10,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sukmaapp.preloandroiddeveloperchallenge.network.PreloServices;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -71,7 +76,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String result){
                 if(!result.contains("username, email atau password salah")){
-                    startActivity(new Intent(context,LovelistActivity.class));
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        String token = jsonObject.getJSONObject("_data").getString("token");
+
+                        Intent intent = new Intent(context,LovelistActivity.class);
+                        intent.putExtra("token",token);
+                        startActivity(intent);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }else{
                     Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                 }

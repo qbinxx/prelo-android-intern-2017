@@ -3,6 +3,7 @@ package com.example.sukmaapp.preloandroiddeveloperchallenge.network;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
@@ -12,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.sukmaapp.preloandroiddeveloperchallenge.utils.AppController;
 
@@ -19,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Sogeking on 10/28/2017.
@@ -28,6 +31,7 @@ public class PreloServices {
     private String baseUrl = "https://dev.prelo.id/";
 
     private String loginUrl = "api/auth/login";
+    private String loveListUrl = "api/me/lovelist";
 
     public interface VolleyCallback{
         void onSuccess(String result);
@@ -67,6 +71,47 @@ public class PreloServices {
         AppController.getInstance().addToRequestQueue(jsonObjReq);
 
     }
+
+    public void getLovelist(final String token, final VolleyCallback callback) {
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                baseUrl+loveListUrl, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.onSuccess(response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("GetLoveList",error.toString());
+                String response = convertErrorToString(error);
+                callback.onSuccess(response);
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Token "+token);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+
+        };
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                7000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
 
     /**
      * Deskripsi :  Konversi error ke string berdasarkan jenis error yang diterima

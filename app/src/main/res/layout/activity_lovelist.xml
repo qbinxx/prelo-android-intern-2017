@@ -7,17 +7,11 @@
     tools:context="com.example.sukmaapp.preloandroiddeveloperchallenge.LovelistActivity">
 
     <!--Lovelist Layout-->
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_love_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Barang yang kamu sukai akan tampil disini"
-            android:textAlignment="center"
-            android:layout_marginTop="50dp"/>
-
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
